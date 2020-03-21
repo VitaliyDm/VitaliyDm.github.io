@@ -1,0 +1,206 @@
+/* fonts import */
+@import url('https://fonts.googleapis.com/css?family=Gabriela|Roboto&display=swap');
+
+/* reset css */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    text-decoration: none;
+    color: #000;
+}
+
+.wrapper {
+    max-width: 1080px;
+    margin: 20px auto;
+}
+
+/* text properties */
+.text_h1 {
+    font-size: 48px;
+    line-height: 45px;
+}
+
+.text_roboto {
+    font-family: Roboto, sans-serif;
+}
+
+.text_roboto-light {
+    font-family: "Roboto script=all rev=1", "Adobe Blank", sans-serif;
+    font-weight: 100;
+}
+
+.text_gabriela {
+    font-family: Gabriela, serif;
+}
+
+.text_h2 {
+    font-size: 42px;
+    line-height: 42px;
+}
+
+.text_h3 {
+    font-size: 30px;
+    line-height: 30px;
+}
+
+.text_p {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.text_pink {
+    color: #F49EC4;
+}
+
+.error__wrapper {
+    text-align: center;
+}
+
+.error__code {
+    font-size: 150px;
+}
+
+/* components */
+/* header */
+.header__wrapper {
+    border-bottom: 2px solid #959393;
+    padding: 30px 60px 30px;
+}
+
+.header__link:hover {
+    cursor: pointer;
+}
+
+.header__link {
+    display: inline-flex;
+}
+
+.header__logo {
+    width: 45px;
+    height: 45px;
+    margin-right: 7px;
+}
+
+/* quest card */
+.quest-card__wrapper {
+    margin: 50px 0 0;
+    display: inline-flex;
+}
+
+.quest-card__content {
+    margin-left: 34px;
+}
+
+.quest-card__image {
+    height: 150px;
+    width: 200px;
+}
+
+.quest-card__description {
+    margin-top: 25px;
+}
+
+.quest-card__tag__wrapper {
+    margin-top: 16px;
+    display: flex;
+    flex-flow: wrap;
+}
+
+.quest-card__tag {
+    color: #fff;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 18px;
+    background: #B3B3B3;
+    border-radius: 4px;
+    margin: 6px 4px;
+}
+
+/* achievement */
+.achievement__wrapper {
+    display: inline-flex;
+}
+
+.achievement__image {
+    height: 147px;
+    width: 147px;
+    border-radius: 147px;
+}
+
+.achievement__content {
+    margin: 34px;
+}
+
+.achievement__name {
+    line-height: 60px;
+}
+
+/* controls */
+.controls__wrapper {
+    display: flex;
+    margin: 38px 0;
+    justify-content: center;
+}
+
+.control__button {
+    background: #555;
+    border-radius: 4px;
+    text-align: center;
+    padding: 20px 18px;
+    color: white;
+    font-size: 29px;
+    margin: 8px 20px;
+}
+
+/* quest content */
+.quest-content__wrapper {
+    position: relative;
+    height: 380px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.quest-content__text {
+    color: white;
+    max-width: 50%;
+    position: absolute;
+    word-break: break-all;
+    white-space: pre-line;
+}
+
+/* quest content position */
+.top-left {
+    top: 30px;
+    left: 30px;
+}
+
+.top-right {
+    top: 30px;
+    right: 30px;
+}
+
+.bottom-left {
+    bottom: 30px;
+    left: 30px;
+}
+
+.bottom-right {
+    bottom: 30px;
+    right: 30px;
+}

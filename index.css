@@ -101,6 +101,7 @@ time, mark, audio, video {
 .quest-card__wrapper {
     margin: 50px 0 0;
     display: inline-flex;
+    width: 100%;
 }
 
 .quest-card__content {
@@ -124,12 +125,15 @@ time, mark, audio, video {
 
 .quest-card__tag {
     color: #fff;
-    height: 38px;
     line-height: 38px;
-    padding: 0 18px;
+    padding: 8px 18px;
     background: #B3B3B3;
     border-radius: 4px;
     margin: 6px 4px;
+}
+
+.quest-card__tag:hover {
+    cursor: pointer;
 }
 
 /* achievement */

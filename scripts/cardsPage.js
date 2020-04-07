@@ -80,7 +80,7 @@ function renderCard(card, index, cards) {
     cardWrapper.appendChild(cardImage);
     cardWrapper.appendChild(cardContent);
 
-    cardLink.setAttribute('href', `/quest/${card}`);
+    cardLink.setAttribute('href', `/quest/${card.link}`);
     cardLink.classList.add('quest-card__title', 'text_h3', 'text_gabriela');
     cardLink.innerText = card.title;
 

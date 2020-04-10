@@ -10,6 +10,8 @@ const pageType = {
 
 let boxElement;
 
+const pageWrapper = document.querySelector('.wrapper');
+
 // Для корректной работы в разных браузерах
 (function (history) {
     const { pushState } = history;
@@ -24,6 +26,37 @@ let boxElement;
 
 window.onpopstate = history.onpushstate = render;
 
+function createElement(type, params) {
+    const element = document.createElement(type);
+
+    if (params.classList) {
+        element.classList.add(...params.classList);
+    }
+
+    if (params.innerHTML) {
+        element.innerHTML = params.innerHTML;
+    }
+
+    if (params.innerText) {
+        element.innerText = params.innerText;
+    }
+
+    if (params.children) {
+        params.children.forEach(item => element.appendChild(item));
+    }
+
+    if (params.attributes) {
+        params.attributes
+            .forEach(attribute => element.setAttribute(attribute.name, attribute.value));
+    }
+
+    if (params.eventListeners) {
+        params.eventListeners.forEach(listener => { element.addEventListener(listener.name, listener.action); });
+    }
+
+    return element;
+}
+
 function request(address) {
     return fetch(address)
         .then(res => res.json())
@@ -31,30 +64,25 @@ function request(address) {
 }
 
 function clearPage() {
-    const pageWrapper = document.querySelector('.wrapper');
-
     pageWrapper.innerHTML = '';
 }
 
 function renderError(err) {
     clearPage();
-    const pageWrapper = document.getElementsByClassName('wrapper');
-    const errCode = document.createElement('h1');
-    const errText = document.createElement('h3');
-    const errWrapper = document.createElement('div');
+    const errCode = createElement('h1', {
+        classList: ['error__code', 'text_roboto', 'text_pink'],
+        innerText: err.status
+    });
+    const errText = createElement('h3', {
+        classList: ['text_h3', 'text_roboto-light'],
+        innerText: err
+    });
+    const errWrapper = createElement('div', {
+        classList: 'error_wrapper',
+        children: [errCode, errText]
+    });
 
-    errWrapper.classList.add('error__wrapper');
-    errCode.classList.add('error__code', 'text_roboto', 'text_pink');
-    errText.classList.add('text_h3', 'text_roboto-light');
-
-    console.log(err);
-    errCode.innerText = err.status;
-    errText.innerText = err;
-
-    errWrapper.appendChild(errCode);
-    errWrapper.appendChild(errText);
-
-    pageWrapper[0].appendChild(errWrapper);
+    pageWrapper.appendChild(errWrapper);
 }
 
 function changePage(address, type, tag) {
@@ -62,49 +90,47 @@ function changePage(address, type, tag) {
 }
 
 function renderCard(card, index, cards) {
-    const pageWrapper = document.getElementsByClassName('wrapper');
-    const cardWrapper = document.createElement('div');
-    const cardImage = document.createElement('img');
-    const cardContent = document.createElement('div');
-    const cardLink = document.createElement('a');
-    const cardText = document.createElement('p');
-    const cardTags = document.createElement('div');
-
-    cardWrapper.classList.add('quest-card__wrapper');
-
-    cardImage.setAttribute('src', `${staticBasePath}${card.imageAddress}`);
-    cardImage.classList.add('quest-card__image');
-
-    cardContent.classList.add('quest-card__content');
-
-    cardWrapper.appendChild(cardImage);
-    cardWrapper.appendChild(cardContent);
-
-    cardLink.setAttribute('href', `/quest/${card.link}`);
-    cardLink.classList.add('quest-card__title', 'text_h3', 'text_gabriela');
-    cardLink.innerText = card.title;
-
-    cardText.classList.add('quest-card__description', 'text_p', 'text_gabriela');
-    cardText.innerText = card.description;
-
-    cardContent.appendChild(cardLink);
-    cardContent.appendChild(cardText);
-    cardContent.appendChild(cardTags);
-
-    card.tags.forEach(tag => {
-        const tagLink = document.createElement('span');
-
-        tagLink.onclick = changePage(`/filter?filterTag=${tag.link}`, pageType.filter, tag.link);
-        tagLink.classList.add('quest-card__tag', 'text_p', 'text_roboto-light');
-        tagLink.innerText = tag.title;
-        cardTags.appendChild(tagLink);
+    const cardImage = createElement('img', {
+        attributes: [{ name: 'src', value: `${staticBasePath}${card.imageAddress}` }],
+        classList: ['quest-card__image']
+    });
+    const cardLink = createElement('a', {
+        attributes: [{ name: 'href', value: `/quest/${card.link}` }],
+        classList: ['quest-card__title', 'text_h3', 'text_gabriela'],
+        innerText: card.title
+    });
+    const cardText = createElement('p', {
+        classList: ['quest-card__description', 'text_p', 'text_gabriela'],
+        innerText: card.description
+    });
+    const cardTags = createElement('div', {
+        children: card.tags.map(tag => createElement('span', {
+            eventListeners: [{
+                name: 'onClick',
+                action: changePage(`/filter?filterTag=${tag.link}`, pageType.filter, tag.link)
+            }],
+            classList: ['quest-card__tag', 'text_p', 'text_roboto-light'],
+            innerText: tag.title
+        }))
+    });
+    const cardContent = createElement('div', {
+        classList: ['quest-card__content'],
+        children: [cardLink, cardText, cardTags]
     });
 
+    const cardWrapperAttributes = [];
+
     if (index === cards.length - 1) {
-        cardWrapper.setAttribute('id', 'last');
+        cardWrapperAttributes.push({ name: 'id', value: 'last' });
     }
 
-    pageWrapper[0].appendChild(cardWrapper);
+    const cardWrapper = createElement('div', {
+        classList: ['quest-card__wrapper'],
+        children: [cardImage, cardContent],
+        attributes: cardWrapperAttributes
+    });
+
+    pageWrapper.appendChild(cardWrapper);
 }
 
 async function getFilteredCards(tag) {
@@ -114,13 +140,12 @@ async function getFilteredCards(tag) {
         return;
     }
 
-    const wrpper = document.getElementsByClassName('wrapper');
-    const title = document.createElement('h2');
+    const title = createElement('h2', {
+        innerText: res.filterTag,
+        classList: ['text_h2', 'text_gabriela']
+    });
 
-    title.innerText = res.filterTag;
-    title.classList.add('text_h2', 'text_gabriela');
-
-    wrpper[0].appendChild(title);
+    pageWrapper.appendChild(title);
     res.cards.forEach(renderCard);
 }
 

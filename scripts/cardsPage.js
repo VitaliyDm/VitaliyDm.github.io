@@ -106,7 +106,7 @@ function renderCard(card, index, cards) {
     const cardTags = createElement('div', {
         children: card.tags.map(tag => createElement('span', {
             eventListeners: [{
-                name: 'onClick',
+                name: 'click',
                 action: changePage(`/filter?filterTag=${tag.link}`, pageType.filter, tag.link)
             }],
             classList: ['quest-card__tag', 'text_p', 'text_roboto-light'],
